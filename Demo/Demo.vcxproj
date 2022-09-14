@@ -18,25 +18,11 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\ToyGraph\Shader.h" />
-    <ClInclude Include="lib\include\glad\glad.h" />
-    <ClInclude Include="lib\include\GLFW\glfw3.h" />
-    <ClInclude Include="lib\include\GLFW\glfw3native.h" />
-    <ClInclude Include="lib\include\KHR\khrplatform.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="lib\lib\glfw3.lib" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="components\Shader\Shader.cpp" />
-    <ClCompile Include="lib\src\glad.c" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{95ed778f-d534-4a79-b8f3-05dfda2ce2d1}</ProjectGuid>
-    <RootNamespace>ToyGraph</RootNamespace>
+    <ProjectGuid>{ca611cb6-3537-4f11-84b2-869efe2d5d47}</ProjectGuid>
+    <RootNamespace>Demo</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -54,7 +40,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -85,9 +71,9 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>include;lib/include;$(IncludePath)</IncludePath>
-    <LibraryPath>lib\lib;$(LibraryPath)</LibraryPath>
-    <SourcePath>lib/src;$(SourcePath)</SourcePath>
+    <LibraryPath>../ToyGraph/lib/lib;$(LibraryPath)</LibraryPath>
+    <SourcePath>../ToyGraph/lib/src;$(SourcePath)</SourcePath>
+    <IncludePath>../ToyGraph/include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -123,11 +109,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>../ToyGraph/lib/include;../ToyGraph/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -146,6 +134,14 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\ToyGraph\lib\src\glad.c" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\ToyGraph\lib\lib\glfw3.lib" />
+    <Library Include="..\x64\Debug\ToyGraph.lib" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

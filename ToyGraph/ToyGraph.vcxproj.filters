@@ -1,17 +1,68 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="lib">
+      <UniqueIdentifier>{8d793d9a-df83-4b3b-ace3-f42f898ad7dd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="lib\include">
+      <UniqueIdentifier>{ec5b67b4-b913-4734-9050-48e3f64b71e7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="lib\include\glad">
+      <UniqueIdentifier>{1a02ed2c-ffeb-444a-84bd-c1b237229848}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lib\include\GLFW">
+      <UniqueIdentifier>{4bcaa500-34f0-4144-85af-652d198f6b71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\include\KHR">
+      <UniqueIdentifier>{d7eb3061-00f8-453c-85e6-93c3e95ba4ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\lib">
+      <UniqueIdentifier>{ca9028de-9ab1-4b8a-a3aa-6a04f3022e99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\src">
+      <UniqueIdentifier>{a4bd5a0e-7345-45fa-9214-695edfc3c7f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{bcaaa678-f926-4f69-98df-7c8491510a6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="components">
+      <UniqueIdentifier>{bb4ee3c6-3b3a-4501-9314-80418cadf6eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="components\Shader">
+      <UniqueIdentifier>{d6c00e17-c0d7-4737-a694-d77a9f9c009e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\ToyGraph">
+      <UniqueIdentifier>{ea4dcbb1-21cc-40e5-a3ec-76a9276db8a3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="lib\include\KHR\khrplatform.h">
+      <Filter>lib\include\KHR</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\include\GLFW\glfw3.h">
+      <Filter>lib\include\GLFW</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\include\GLFW\glfw3native.h">
+      <Filter>lib\include\GLFW</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\include\glad\glad.h">
+      <Filter>lib\include\glad</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ToyGraph\Shader.h">
+      <Filter>include\ToyGraph</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="lib\lib\glfw3.lib">
+      <Filter>lib\lib</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="lib\src\glad.c">
+      <Filter>lib\src</Filter>
+    </ClCompile>
+    <ClCompile Include="components\Shader\Shader.cpp">
+      <Filter>components\Shader</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
