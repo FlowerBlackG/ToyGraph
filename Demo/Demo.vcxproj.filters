@@ -18,14 +18,8 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\ToyGraph\lib\src\glad.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\ToyGraph\lib\lib\glfw3.lib">
-      <Filter>Resource Files</Filter>
-    </Library>
     <Library Include="..\x64\Debug\ToyGraph.lib">
       <Filter>Resource Files</Filter>
     </Library>

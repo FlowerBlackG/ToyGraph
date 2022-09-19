@@ -20,17 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\ToyGraph\Shader.h" />
-    <ClInclude Include="lib\include\glad\glad.h" />
-    <ClInclude Include="lib\include\GLFW\glfw3.h" />
-    <ClInclude Include="lib\include\GLFW\glfw3native.h" />
-    <ClInclude Include="lib\include\KHR\khrplatform.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="components\ToyGraph\Shader\Shader.cpp" />
+    <ClCompile Include="lib\src\glad.c" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\lib\glfw3.lib" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="components\Shader\Shader.cpp" />
-    <ClCompile Include="lib\src\glad.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

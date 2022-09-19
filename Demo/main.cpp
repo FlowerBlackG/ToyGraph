@@ -7,6 +7,9 @@
 
 #include "ToyGraph/Shader.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
+
 using namespace std;
 
 void framebuffer_size_callback(GLFWwindow* window, int w, int h) {
@@ -44,42 +47,6 @@ int main(int argc, const char* argv[]) {
 
 	glViewport(0, 0, 800, 600);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-	/*
-	// 准备 vertex shader。
-	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	Shader vertexShaderObj = Shader("shaders/shader.vert");
-	const char* vertexShaderSrc = vertexShaderObj.getBuffer();
-	glShaderSource(vertexShader, 1, &vertexShaderSrc, nullptr);
-	glCompileShader(vertexShader);
-	int success;
-	char infoLog[512];
-	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-
-	if (!success) {
-		glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
-		cout << infoLog << endl;
-		exit(-600);
-	}
-
-
-	// fragment shader
-	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	auto fragmentShaderObj = Shader("shaders/shader.frag");
-	const char* fragShaderSrc = fragmentShaderObj.getBuffer();
-	glShaderSource(fragmentShader, 1, &fragShaderSrc, nullptr);
-	glCompileShader(fragmentShader);
-
-	// 绑定shader
-	GLuint shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-
-	glUseProgram(shaderProgram);
-
-	// 清除 shader 对象
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);*/
 
 	Shader ourShader("shaders/shader.vert", "shaders/shader.frag");
 
@@ -91,18 +58,21 @@ int main(int argc, const char* argv[]) {
 	// 准备 vertex data
 	float vertices[] = {
 		/* x, y, z, [-1, 1] */ /* R, G, B */
-		 0.5,  0.5, 0.0, 1,   0,   0,
-		 0.5, -0.5, 0.0, 0,   1,   0,
-		-0.5, -0.5, 0.0, 0,   0,   1,
-		-0.5,  0.5, 0.0, 1, 0.3, 0.7
+	/*	 -0.5,  -0.5, 0, 1,   0,   0,
+		  0,  0.5, 0, 0,   1,   0,
+		  0.5,  -0.5, 0, 0,   0,   1,*/
+
+		 0.5,  0.5, 0.0,   1.0, 0.0, 0.0,   1.0, 1.0,
+		 0.5, -0.5, 0.0,   0.0, 1.0, 0.0,   1.0, 0.0,
+		-0.5, -0.5, 0.0,   0.0, 0.0, 1.0,   0.0, 0.0,
+		-0.5,  0.5, 0.0,   1.0, 1.0, 0.0,   0.0, 1.0
+
 	};
 
 	unsigned indices[] = {
 		0, 1, 3,
 		1, 2, 3
 	};
-
-
 
 	// VAO
 	GLuint VAO;
@@ -128,38 +98,88 @@ int main(int argc, const char* argv[]) {
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	// vertex position
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), 0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), 0);
 	glEnableVertexAttribArray(0);
 
 	// vertex color
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
+
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glEnableVertexAttribArray(2);
 
 	// unbind	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
+
+	// texture
+	int width, height, nrChannels;
+	unsigned char* data = stbi_load("resources/textures/container.jpg", &width, &height, &nrChannels, 0);
+
+	stbi_set_flip_vertically_on_load(true);
+
+	GLuint texture;
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	} else {
+		cout << "failed to load texture." << endl;
+		exit(-201);
+	}
+	stbi_image_free(data);
+
+	// texture of happy face
+	GLuint texture2;
+	glGenTextures(1, &texture2);
+	glBindTexture(GL_TEXTURE_2D, texture2);
+
+	data = stbi_load("resources/textures/awesomeface.png", &width, &height, &nrChannels, 0);
+
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	} else {
+		cout << "failed to load texture 2." << endl;
+		exit(-202);
+	}
+
+
+	ourShader.use();
+	glUniform1i(glGetUniformLocation(ourShader.getId(), "texture1"), 0);
+	ourShader.setInt("texture2", 1);
+
 	// 渲染循环。
 	while (!glfwWindowShouldClose(window)) {
 		processInput(window);
 
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, texture);	
+		
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, texture2);
+		glBindVertexArray(VAO);
 
 		//float timeValue = glfwGetTime();
 		//float greenValue = sin(timeValue) / 2.0f + 0.5f;
 		//int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
-		ourShader.use();
+		
 		
 		//glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
-		glBindVertexArray(VAO);
 		//glDrawArrays(GL_TRIANGLES, 0, 3);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 
-		
-		
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
