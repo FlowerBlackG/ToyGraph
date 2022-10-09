@@ -19,26 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\ToyGraph\Actor.h" />
-    <ClInclude Include="include\ToyGraph\Camera.h" />
-    <ClInclude Include="include\ToyGraph\Engine.h" />
-    <ClInclude Include="include\ToyGraph\Shader.h" />
+    <Library Include="..\x64\Debug\ToyGraph.lib" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="components\ToyGraph\Actor\Actor.cpp" />
-    <ClCompile Include="components\ToyGraph\Camera\Camera.cpp" />
-    <ClCompile Include="components\ToyGraph\Engine\Engine.cpp" />
-    <ClCompile Include="components\ToyGraph\Shader\Shader.cpp" />
-    <ClCompile Include="lib\src\glad.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="lib\lib\glfw3.lib" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{95ed778f-d534-4a79-b8f3-05dfda2ce2d1}</ProjectGuid>
-    <RootNamespace>ToyGraph</RootNamespace>
+    <ProjectGuid>{0895966b-c809-408e-9d4b-b4c0c5b2532f}</ProjectGuid>
+    <RootNamespace>LightingDemo</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -56,7 +46,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -87,9 +77,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>include;lib/include;$(IncludePath)</IncludePath>
-    <LibraryPath>lib\lib;$(LibraryPath)</LibraryPath>
-    <SourcePath>lib/src;$(SourcePath)</SourcePath>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -125,7 +113,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>../ToyGraph/include;../ToyGraph/lib/include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

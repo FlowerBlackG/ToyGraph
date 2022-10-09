@@ -25,9 +25,27 @@
     <Filter Include="lib\src">
       <UniqueIdentifier>{e8264820-80c0-4bcf-ad83-addef16515ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="components\ToyGraph\Camera">
+      <UniqueIdentifier>{3689c422-5d30-4733-8517-7e2e6cf5cd4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="components\ToyGraph\Actor">
+      <UniqueIdentifier>{004084d7-686f-4e4d-bdb4-677ca6efe27e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="components\ToyGraph\Engine">
+      <UniqueIdentifier>{d4444a6a-a3d7-42a1-ab27-dd1c3698c05c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\ToyGraph\Shader.h">
+      <Filter>include\ToyGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ToyGraph\Camera.h">
+      <Filter>include\ToyGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ToyGraph\Actor.h">
+      <Filter>include\ToyGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ToyGraph\Engine.h">
       <Filter>include\ToyGraph</Filter>
     </ClInclude>
   </ItemGroup>
@@ -37,6 +55,15 @@
     </ClCompile>
     <ClCompile Include="lib\src\glad.c">
       <Filter>lib\src</Filter>
+    </ClCompile>
+    <ClCompile Include="components\ToyGraph\Camera\Camera.cpp">
+      <Filter>components\ToyGraph\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="components\ToyGraph\Actor\Actor.cpp">
+      <Filter>components\ToyGraph\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="components\ToyGraph\Engine\Engine.cpp">
+      <Filter>components\ToyGraph\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

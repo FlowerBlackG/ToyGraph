@@ -3,9 +3,85 @@
 
 using namespace std;
 
+
+/* ------------ public ------------ */
+
 Shader::Shader(const string& vertexShaderFilePath, const string& fragmentShaderFilePath) {
 	this->init(vertexShaderFilePath, fragmentShaderFilePath);
 }
+
+Shader& Shader::resetErrCodeAndErrMsg() {
+	this->errcode = ShaderError::SHADER_OK;
+	this->errmsg = "";
+	return *this;
+}
+
+GLuint Shader::getId() { 
+	return id; 
+}
+
+GLuint Shader::setId(GLuint id) {
+	this->id = id;
+	return id;
+}
+
+void Shader::use() {
+	glUseProgram(id);
+}
+
+const Shader& Shader::setBool(const std::string& name, bool value) const {
+	glUniform1i(glGetUniformLocation(id, name.c_str()), (value ? 1 : 0));
+	return *this;
+}
+
+const Shader& Shader::setInt(const std::string& name, int value) const {
+	glUniform1i(glGetUniformLocation(id, name.c_str()), value);
+	return *this;
+}
+
+const Shader& Shader::setFloat(const std::string& name, float value) const {
+	glUniform1f(glGetUniformLocation(id, name.c_str()), value);
+	return *this;
+}
+
+const Shader& Shader::setMatrix4fv(
+	const std::string& name, 
+	const float* value, 
+	GLsizei count, 
+	GLboolean transpose
+) const {
+	glUniformMatrix4fv(glGetUniformLocation(id, name.c_str()), count, transpose, value);
+	return *this;
+}
+
+const Shader& Shader::setMatrix4fv(
+	const std::string& name, 
+	const glm::mat4& value, 
+	GLsizei count, 
+	GLboolean transpose
+) const {
+	return setMatrix4fv(name, &value[0][0], count, transpose);
+}
+
+const Shader& Shader::setVector3f(
+	const std::string& name, 
+	const glm::vec3& vec,
+	GLsizei count
+) const {
+	return this->setVector3f(name, vec.x, vec.y, vec.z, count);
+}
+
+const Shader& Shader::setVector3f(
+	const std::string& name, 
+	float x, float y, float z,
+	GLsizei count
+) const {
+	float values[] = { x, y, z };
+	glUniform3fv(glGetUniformLocation(this->id, name.c_str()), count, values);
+	return *this;
+}
+
+/* ------------ protected ------------ */
 
 void Shader::init(const string& vertexShaderFilePath, const string& fragmentShaderFilePath) {
 

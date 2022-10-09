@@ -1,0 +1,21 @@
+{
+    "files.encoding": "gb18030",
+    "C_Cpp.default.intelliSenseMode": "windows-msvc-x64",
+    "C_Cpp.doxygen.generatedStyle": "/**",
+    "files.exclude": {
+        "**/.vs": true,
+        "**/*.aps": true,
+        "**/*.vcxproj": true,
+        "**/*.vcxproj.*": true,
+        "**/x64": true
+    },
+    "C_Cpp.default.includePath": [
+        "${workspaceFolder}/ToyGraph/include",
+        "${workspaceFolder}/ToyGraph/lib/include"
+    ],
+    "files.associations": {
+        "cmath": "cpp",
+        "iostream": "cpp",
+        "xstring": "cpp"
+    }
+}

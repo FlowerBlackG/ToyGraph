@@ -1,15 +1,26 @@
 /*
  * Shader 程序封装类。
+ * 适用于 OpenGL 程序。
  */
 
 #pragma once
 
+// glad
+
 #include <glad/glad.h>
+
+// stl
 
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <iostream>
+
+// glm
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 enum class ShaderError {
     SHADER_OK,
@@ -22,38 +33,66 @@ enum class ShaderError {
 
 /**
  * Shader 程序封装类。 
+ * 适用于 OpenGL 程序。
  */
 class Shader {
 public:
+
+    /**
+     * 遇到错误时，不会抛出异常，但是会设置 errcode 和 errmsg。
+     * 
+     * @param vertexShaderFilePath vertex shader 文件路径。
+     * @param fragmentShaderFilePath fragment shader 文件路径。
+     */
     Shader(const std::string& vertexShaderFilePath, const std::string& fragmentShaderFilePath);
 
+    
+    Shader& resetErrCodeAndErrMsg();
     
 
     ~Shader() {};
 
-    GLuint getId() { return id; }
-    GLuint setId(GLuint id) { 
-        this->id = id; 
-    }
+    GLuint getId();
+    GLuint setId(GLuint id);
 
     /**
      * 使用这个 shader 程序。 
      */
-    void use() {
-        glUseProgram(id);
-    }
+    void use();
 
-    void setBool(const std::string& name, bool value) const {
-        glUniform1i(glGetUniformLocation(id, name.c_str()), int(value));
-    }
+    /* ------------ 设置 uniform ------------ */
 
-    void setInt(const std::string& name, int value) const {
-        glUniform1i(glGetUniformLocation(id, name.c_str()), value);
-    }
+    const Shader& setBool(const std::string& name, bool value) const;
 
-    void setFloat(const std::string& name, float value) const {
-        glUniform1f(glGetUniformLocation(id, name.c_str()), value);
-    }
+    const Shader& setInt(const std::string& name, int value) const;
+
+    const Shader& setFloat(const std::string& name, float value) const;
+
+    const Shader& setMatrix4fv(
+        const std::string& name, 
+        const float* value, 
+        GLsizei count = 1, 
+        GLboolean transpose = GL_FALSE
+    ) const;
+
+    const Shader& setMatrix4fv(
+        const std::string& name, 
+        const glm::mat4& value, 
+        GLsizei count = 1, 
+        GLboolean transpose = GL_FALSE
+    ) const;
+
+    const Shader& setVector3f(
+        const std::string& name, 
+        const glm::vec3& vec,
+        GLsizei count = 1
+    ) const;
+
+    const Shader& setVector3f(
+        const std::string& name, 
+        float x, float y, float z,
+        GLsizei count = 1
+    ) const;
 
 public:
 
@@ -67,14 +106,19 @@ public:
      */
     std::string errmsg = "";
 
-private:
+protected:
+
+    // 禁止直接构造和复制构造。
+
+    Shader() {}
+    Shader(const Shader& shader) {}
 
     /**
      * 初始化。使用构造函数调用此函数，可以更方便地在中途退出。
      */
     void init(const std::string& vertexShaderFilePath, const std::string& fragmentShaderFilePath);
 
-private:
+protected:
 
     /**
      * shader 程序id。
