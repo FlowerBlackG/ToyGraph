@@ -34,6 +34,9 @@
     <Filter Include="components\ToyGraph\Engine">
       <UniqueIdentifier>{d4444a6a-a3d7-42a1-ab27-dd1c3698c05c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="components\ToyGraph\Texture">
+      <UniqueIdentifier>{daaf0cc4-d72b-48ac-9148-c3a21f4cd88c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\ToyGraph\Shader.h">
@@ -46,6 +49,9 @@
       <Filter>include\ToyGraph</Filter>
     </ClInclude>
     <ClInclude Include="include\ToyGraph\Engine.h">
+      <Filter>include\ToyGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ToyGraph\Texture.h">
       <Filter>include\ToyGraph</Filter>
     </ClInclude>
   </ItemGroup>
@@ -64,6 +70,9 @@
     </ClCompile>
     <ClCompile Include="components\ToyGraph\Engine\Engine.cpp">
       <Filter>components\ToyGraph\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="components\ToyGraph\Texture\Texture.cpp">
+      <Filter>components\ToyGraph\Texture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

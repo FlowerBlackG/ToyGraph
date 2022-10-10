@@ -23,12 +23,14 @@
     <ClInclude Include="include\ToyGraph\Camera.h" />
     <ClInclude Include="include\ToyGraph\Engine.h" />
     <ClInclude Include="include\ToyGraph\Shader.h" />
+    <ClInclude Include="include\ToyGraph\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="components\ToyGraph\Actor\Actor.cpp" />
     <ClCompile Include="components\ToyGraph\Camera\Camera.cpp" />
     <ClCompile Include="components\ToyGraph\Engine\Engine.cpp" />
     <ClCompile Include="components\ToyGraph\Shader\Shader.cpp" />
+    <ClCompile Include="components\ToyGraph\Texture\Texture.cpp" />
     <ClCompile Include="lib\src\glad.c" />
   </ItemGroup>
   <ItemGroup>

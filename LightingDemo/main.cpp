@@ -205,8 +205,10 @@ int main() {
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), nullptr); 
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*) (3 * sizeof(float)));
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*) (6 * sizeof(float)));
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
 
     // light source
     GLuint lightCubeVAO;
@@ -230,10 +232,27 @@ int main() {
         glClearColor(0, 0, 0, 1);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        glm::vec3 lightColor;
+        lightColor.x = sin(glfwGetTime() * 2);
+        lightColor.y = sin(glfwGetTime() * 0.7);
+        lightColor.z = sin(glfwGetTime() * 1.3);
+
+        glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
+        glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
+
         lightingShader.use();
-        lightingShader.setVector3f("objectColor", 1, 0.5, 0.31)
-            .setVector3f("lightColor", 1.0f, 1.0f, 1.0f)
+        lightingShader.setInt("material.diffuse", 0)
+            .setVector3f("material.specular", 0.5, 0.5, 0.5)
+            .setFloat("material.shininess", 32)
+            .setVector3f("light.ambient", ambientColor)
+            .setVector3f("light.diffuse", diffuseColor)
+            .setVector3f("light.specular", 1, 1, 1)
             .setVector3f("lightPos", lightPos);
+
+        GLuint diffuseMap = TextureUtils::loadTexture("../resources/textures/container2.png");
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, diffuseMap);
 
         // transform
         auto projection = glm::perspective(glm::radians(camera.getFov()), 1.0f * SCR_WIDTH / SCR_HEIGHT, 0.1f, 100.0f);
@@ -243,7 +262,8 @@ int main() {
             .setMatrix4fv("view", view);
 
         auto model = glm::mat4(1);
-        lightingShader.setMatrix4fv("model", model);
+        lightingShader.setMatrix4fv("model", model)
+            .setVector3f("viewPos", camera.getPosition());
 
         // render the cube
         glBindVertexArray(cubeVAO);

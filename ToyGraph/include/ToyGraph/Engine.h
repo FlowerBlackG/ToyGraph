@@ -24,6 +24,7 @@
 #include "ToyGraph/Camera.h"
 #include "ToyGraph/Actor.h"
 #include "ToyGraph/Shader.h"
+#include "ToyGraph/Texture.h"
 
 class Engine {
 
