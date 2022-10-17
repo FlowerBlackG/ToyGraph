@@ -15,6 +15,8 @@ Engine& Engine::getInstance() {
     return engineInstance;
 }
 
+Engine Engine::engineInstance;
+
 /* ------------ public. ------------ */
 
 Texture* Engine::getLoadedTexture(const string& filepath) {

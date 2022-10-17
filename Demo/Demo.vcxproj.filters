@@ -20,7 +20,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\x64\Debug\ToyGraph.lib">
+    <Library Include="..\x64\Release\ToyGraph.lib">
       <Filter>Resource Files</Filter>
     </Library>
   </ItemGroup>

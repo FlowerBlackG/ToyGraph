@@ -14,8 +14,8 @@ using namespace std;
 
 /* ------------ public. ------------ */
 
-Model::Model(const string& filepath) {
-    this->loadModel(filepath);
+Model::Model(const string& filepath, bool flipUVs) {
+    this->loadModel(filepath, flipUVs);
 }
 
 void Model::draw(Shader& shader) {
@@ -27,7 +27,7 @@ void Model::draw(Shader& shader) {
 
 /* ------------ protected. ------------ */
 
-void Model::loadModel(const string& filepath) {
+void Model::loadModel(const string& filepath, bool flipUVs) {
     Assimp::Importer importer;
 
     /*
@@ -36,15 +36,21 @@ void Model::loadModel(const string& filepath) {
         triangulate: 令 importer 将可能存在的非三角形转换成三角形。
 
         flipUVs: 反转贴图的 y 轴。这样我们就不用自己弄了。
+                 （实际效果与预期不符，暂时关闭...）
 
         其他可选：aiProcess_GenNormals
                 aiProcess_SplitLargeMeshes
                 aiProcess_OptimizeMeshes
     */
     // 注：importer 会在析构时释放 scene。
-    const aiScene* scene = importer.ReadFile(
-        filepath, aiProcess_Triangulate | aiProcess_FlipUVs
-    );
+
+    unsigned int importerFlags = aiProcess_Triangulate;
+    
+    if (flipUVs) {
+        importerFlags |= aiProcess_FlipUVs;
+    }
+
+    const aiScene* scene = importer.ReadFile(filepath, importerFlags);
     
 
     // 错误处理。

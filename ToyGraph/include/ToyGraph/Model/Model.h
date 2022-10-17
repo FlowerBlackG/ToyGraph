@@ -25,7 +25,7 @@ enum class ModelError {
 class Model {
 
 public:
-    Model(const std::string& filepath);
+    Model(const std::string& filepath, bool flipUVs = true);
 
     void draw(class Shader& shader);
 
@@ -38,7 +38,7 @@ protected:
     std::vector<class Mesh> meshes;
     std::string directory;
 
-    void loadModel(const std::string& filepath);
+    void loadModel(const std::string& filepath, bool flipUVs = true);
 
     void processNode(aiNode* node, const aiScene* scene);
     

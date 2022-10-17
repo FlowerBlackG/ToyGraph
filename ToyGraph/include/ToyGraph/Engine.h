@@ -55,5 +55,4 @@ private:
     Engine(const Engine&) = default;
     Engine& operator = (const Engine&) {};
 
-
 };
