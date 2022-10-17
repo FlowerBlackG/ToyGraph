@@ -34,8 +34,11 @@
     <Filter Include="components\ToyGraph\Engine">
       <UniqueIdentifier>{d4444a6a-a3d7-42a1-ab27-dd1c3698c05c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="components\ToyGraph\Texture">
-      <UniqueIdentifier>{daaf0cc4-d72b-48ac-9148-c3a21f4cd88c}</UniqueIdentifier>
+    <Filter Include="components\ToyGraph\Model">
+      <UniqueIdentifier>{f6999e93-d835-4027-a9c2-3e7770813843}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="components\ToyGraph\AppRuntime">
+      <UniqueIdentifier>{88d5c5f4-4c41-4e99-b57b-d2fb39aca0f1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -49,9 +52,6 @@
       <Filter>include\ToyGraph</Filter>
     </ClInclude>
     <ClInclude Include="include\ToyGraph\Engine.h">
-      <Filter>include\ToyGraph</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ToyGraph\Texture.h">
       <Filter>include\ToyGraph</Filter>
     </ClInclude>
   </ItemGroup>
@@ -71,12 +71,24 @@
     <ClCompile Include="components\ToyGraph\Engine\Engine.cpp">
       <Filter>components\ToyGraph\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="components\ToyGraph\Texture\Texture.cpp">
-      <Filter>components\ToyGraph\Texture</Filter>
+    <ClCompile Include="components\ToyGraph\Model\Mesh.cpp">
+      <Filter>components\ToyGraph\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="components\ToyGraph\Model\Model.cpp">
+      <Filter>components\ToyGraph\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="components\ToyGraph\Model\Texture.cpp">
+      <Filter>components\ToyGraph\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="components\ToyGraph\AppRuntime\AppRuntime.cpp">
+      <Filter>components\ToyGraph\AppRuntime</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\lib\glfw3.lib">
+      <Filter>lib\lib</Filter>
+    </Library>
+    <Library Include="lib\lib\assimp.lib">
       <Filter>lib\lib</Filter>
     </Library>
   </ItemGroup>

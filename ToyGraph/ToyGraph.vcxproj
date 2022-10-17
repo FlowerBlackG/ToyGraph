@@ -23,17 +23,20 @@
     <ClInclude Include="include\ToyGraph\Camera.h" />
     <ClInclude Include="include\ToyGraph\Engine.h" />
     <ClInclude Include="include\ToyGraph\Shader.h" />
-    <ClInclude Include="include\ToyGraph\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="components\ToyGraph\Actor\Actor.cpp" />
+    <ClCompile Include="components\ToyGraph\AppRuntime\AppRuntime.cpp" />
     <ClCompile Include="components\ToyGraph\Camera\Camera.cpp" />
     <ClCompile Include="components\ToyGraph\Engine\Engine.cpp" />
+    <ClCompile Include="components\ToyGraph\Model\Mesh.cpp" />
+    <ClCompile Include="components\ToyGraph\Model\Model.cpp" />
+    <ClCompile Include="components\ToyGraph\Model\Texture.cpp" />
     <ClCompile Include="components\ToyGraph\Shader\Shader.cpp" />
-    <ClCompile Include="components\ToyGraph\Texture\Texture.cpp" />
     <ClCompile Include="lib\src\glad.c" />
   </ItemGroup>
   <ItemGroup>
+    <Library Include="lib\lib\assimp.lib" />
     <Library Include="lib\lib\glfw3.lib" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -64,7 +67,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -92,6 +95,9 @@
     <IncludePath>include;lib/include;$(IncludePath)</IncludePath>
     <LibraryPath>lib\lib;$(LibraryPath)</LibraryPath>
     <SourcePath>lib/src;$(SourcePath)</SourcePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);include;lib/include</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -128,11 +134,16 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>include;lib/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -142,6 +153,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>include;lib/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

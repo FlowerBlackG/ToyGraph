@@ -1,5 +1,7 @@
 
 #include "ToyGraph/Shader.h"
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -158,5 +160,7 @@ void Shader::init(const string& vertexShaderFilePath, const string& fragmentShad
 
 	vShaderFile.close();
 	fShaderFile.close();
+
+	this->errcode = ShaderError::SHADER_OK;
 
 }

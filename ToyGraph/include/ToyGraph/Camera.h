@@ -6,12 +6,7 @@
 
 #pragma once
 
-// glm
-#include <glad/glad.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-
-#include "ToyGraph/Actor.h"
+#include <ToyGraph/Actor.h>
 
 /**
  * Ïà»ú¡£

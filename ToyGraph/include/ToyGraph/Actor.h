@@ -6,13 +6,19 @@
 
 #pragma once
 
-// glm
+// glad & glfw
 #include <glad/glad.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include <GLFW/glfw3.h>
 
 // stl
 #include <functional>
+#include <cmath>
+#include <map>
+
+// glm
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 /**
  * —›‘±¿‡°£

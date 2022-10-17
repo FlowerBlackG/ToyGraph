@@ -138,7 +138,7 @@ int main() {
     glEnable(GL_DEPTH_TEST);
 
     // shaders
-    Shader lightingShader("shaders/colors.vs", "shaders/colors.fs");
+    Shader lightingShader("shaders/colors.vs", "shaders/moreLight.fs");
 
     if (lightingShader.errcode != ShaderError::SHADER_OK) {
         cout << lightingShader.errmsg << endl;
@@ -193,6 +193,28 @@ int main() {
         -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f
     };
 
+
+    glm::vec3 cubePositions[] = {
+        glm::vec3( 0.0f,  0.0f,  0.0f),
+        glm::vec3( 2.0f,  5.0f, -15.0f),
+        glm::vec3(-1.5f, -2.2f, -2.5f),
+        glm::vec3(-3.8f, -2.0f, -12.3f),
+        glm::vec3( 2.4f, -0.4f, -3.5f),
+        glm::vec3(-1.7f,  3.0f, -7.5f),
+        glm::vec3( 1.3f, -2.0f, -2.5f),
+        glm::vec3( 1.5f,  2.0f, -2.5f),
+        glm::vec3( 1.5f,  0.2f, -1.5f),
+        glm::vec3(-1.3f,  1.0f, -1.5f)
+    };
+
+    // positions of the point lights
+    glm::vec3 pointLightPositions[] = {
+        glm::vec3( 0.7f,  0.2f,  2.0f),
+        glm::vec3( 2.3f, -3.3f, -4.0f),
+        glm::vec3(-4.0f,  2.0f, -12.0f),
+        glm::vec3( 0.0f,  0.0f, -3.0f)
+    };
+
     // normal cube
     GLuint VBO, cubeVAO;
     glGenVertexArrays(1, &cubeVAO);
@@ -218,6 +240,25 @@ int main() {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), nullptr);
     glEnableVertexAttribArray(0);
 
+
+    GLuint specularMap = TextureUtils::loadTextureFromFile("../resources/textures/container2_specular.png");
+
+    cout << "specularMap id: " << specularMap << endl;
+    if (specularMap < 0) {
+        return -1;
+    }
+
+    GLuint diffuseMap = TextureUtils::loadTextureFromFile("../resources/textures/container2.png");
+    
+    cout << "diffuseMap id: " << diffuseMap << endl;
+    if (diffuseMap < 0) {
+        return -1;
+    }
+
+    
+
+    
+
     // render loop.
     while (!glfwWindowShouldClose(window)) {
         // per-frame time logic
@@ -237,22 +278,70 @@ int main() {
         lightColor.y = sin(glfwGetTime() * 0.7);
         lightColor.z = sin(glfwGetTime() * 1.3);
 
+        lightColor = glm::vec3(2, 2, 2);
+
         glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
         glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
 
         lightingShader.use();
+
         lightingShader.setInt("material.diffuse", 0)
-            .setVector3f("material.specular", 0.5, 0.5, 0.5)
-            .setFloat("material.shininess", 32)
+            .setInt("material.specular", 1)
+            .setVector3f("light.position", camera.getPosition())
+            .setVector3f("light.direction", camera.getDirectionVectorFront())
+            .setFloat("light.cutOff", glm::cos(glm::radians(12.5f)))
+            .setFloat("light.outerCutOff", glm::cos(glm::radians(17.5f)))
+            .setFloat("light.constant", 1)
+            .setFloat("light.linear", 0.09)
+            .setFloat("light.quadratic", 0.032)
+            ;
+
+        lightingShader.setVector3f("material.specular", 0.5, 0.5, 0.5)
+            .setFloat("material.shininess", 64.0f)
             .setVector3f("light.ambient", ambientColor)
             .setVector3f("light.diffuse", diffuseColor)
             .setVector3f("light.specular", 1, 1, 1)
             .setVector3f("lightPos", lightPos);
 
-        GLuint diffuseMap = TextureUtils::loadTexture("../resources/textures/container2.png");
+        lightingShader.setVector3f("dirLight.direction", -0.2f, -1.0f, -0.3f)
+            .setVector3f("dirLight.ambient", 0.05f, 0.05f, 0.05f)
+            .setVector3f("dirLight.diffuse", 0.4f, 0.4f, 0.4f)
+            .setVector3f("dirLight.specular", 0.5f, 0.5f, 0.5f)
+            ;
 
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, diffuseMap);
+        
+        lightingShader.setVector3f("pointLights[0].position", pointLightPositions[0])
+            .setVector3f("pointLights[0].ambient", 0.05f, 0.05f, 0.05f)
+            .setVector3f("pointLights[0].diffuse", 0.8f, 0.8f, 0.8f)
+            .setVector3f("pointLights[0].specular", 1.0f, 1.0f, 1.0f)
+            .setFloat("pointLights[0].constant", 1.0f)
+            .setFloat("pointLights[0].linear", 0.09f)
+            .setFloat("pointLights[0].quadratic", 0.032f)
+            ;
+        lightingShader.setVector3f("pointLights[1].position", pointLightPositions[1])
+            .setVector3f("pointLights[1].ambient", 0.05f, 0.05f, 0.05f)
+            .setVector3f("pointLights[1].diffuse", 0.8f, 0.8f, 0.8f)
+            .setVector3f("pointLights[1].specular", 1.0f, 1.0f, 1.0f)
+            .setFloat("pointLights[1].constant", 1.0f)
+            .setFloat("pointLights[1].linear", 0.09f)
+            .setFloat("pointLights[1].quadratic", 0.032f)
+            ;
+        lightingShader.setVector3f("pointLights[2].position", pointLightPositions[2])
+            .setVector3f("pointLights[2].ambient", 0.05f, 0.05f, 0.05f)
+            .setVector3f("pointLights[2].diffuse", 0.8f, 0.8f, 0.8f)
+            .setVector3f("pointLights[2].specular", 1.0f, 1.0f, 1.0f)
+            .setFloat("pointLights[2].constant", 1.0f)
+            .setFloat("pointLights[2].linear", 0.09f)
+            .setFloat("pointLights[2].quadratic", 0.032f)
+            ;
+        lightingShader.setVector3f("pointLights[3].position", pointLightPositions[3])
+            .setVector3f("pointLights[3].ambient", 0.05f, 0.05f, 0.05f)
+            .setVector3f("pointLights[3].diffuse", 0.8f, 0.8f, 0.8f)
+            .setVector3f("pointLights[3].specular", 1.0f, 1.0f, 1.0f)
+            .setFloat("pointLights[3].constant", 1.0f)
+            .setFloat("pointLights[3].linear", 0.09f)
+            .setFloat("pointLights[3].quadratic", 0.032f)
+            ;
 
         // transform
         auto projection = glm::perspective(glm::radians(camera.getFov()), 1.0f * SCR_WIDTH / SCR_HEIGHT, 0.1f, 100.0f);
@@ -265,23 +354,46 @@ int main() {
         lightingShader.setMatrix4fv("model", model)
             .setVector3f("viewPos", camera.getPosition());
 
-        // render the cube
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, diffuseMap);
+
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, specularMap);
+
         glBindVertexArray(cubeVAO);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+
+        // wooden boxes
+
+        for (int i = 0; i < 10; i++) {
+
+            model = glm::mat4(1.0f);
+            model = glm::translate(model, cubePositions[i]);
+            float angle = 20.0f * i;
+            model = glm::rotate(model, glm::radians(angle), glm::vec3(1, 0.3, 0.5));
+
+            lightingShader.setMatrix4fv("model", model);
+
+            // render the cube
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
+
 
         // draw the lamp object
+
+        for (int i = 0; i < 4; i++) {
         
-        lightCubeShader.use();
-        lightCubeShader.setMatrix4fv("projection", projection)
-            .setMatrix4fv("view", view);
+            lightCubeShader.use();
+            lightCubeShader.setMatrix4fv("projection", projection)
+                .setMatrix4fv("view", view);
 
-        model = glm::mat4(1);
-        model = glm::translate(model, lightPos);
-        model = glm::scale(model, glm::vec3(0.2));
-        lightCubeShader.setMatrix4fv("model", model);
+            model = glm::mat4(1);
+            model = glm::translate(model, pointLightPositions[i]);
+            model = glm::scale(model, glm::vec3(0.2));
+            lightCubeShader.setMatrix4fv("model", model);
 
-        glBindVertexArray(lightCubeVAO);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+            glBindVertexArray(lightCubeVAO);
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
 
         // render end //
 

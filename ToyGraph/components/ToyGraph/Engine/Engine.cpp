@@ -7,4 +7,20 @@
 
 #include "ToyGraph/Engine.h"
 
+using namespace std;
 
+/* ------------ public. ------------ */
+
+Engine& Engine::getInstance() {
+    return engineInstance;
+}
+
+/* ------------ public. ------------ */
+
+Texture* Engine::getLoadedTexture(const string& filepath) {
+    if (this->texturesLoaded.count(filepath)) {
+        return &this->texturesLoaded[filepath];
+    } else {
+        return nullptr;
+    }
+}

@@ -14,6 +14,7 @@
 // stl
 #include <functional>
 #include <cmath>
+#include <map>
 
 // glm
 #include <glm/glm.hpp>
@@ -24,8 +25,35 @@
 #include "ToyGraph/Camera.h"
 #include "ToyGraph/Actor.h"
 #include "ToyGraph/Shader.h"
-#include "ToyGraph/Texture.h"
+#include "ToyGraph/AppRuntime.h"
 
+#include "ToyGraph/Model/Texture.h"
+#include "ToyGraph/Model/Mesh.h"
+#include "ToyGraph/Model/Model.h"
+
+
+/**
+ * ToyGraph 图形引擎总控制器。
+ * 饿汉式单例模式。
+ */
 class Engine {
+
+public:
+    static Engine& getInstance();
+
+public:
+    Texture* getLoadedTexture(const std::string& filepath);
+
+public:
+    std::map<const std::string, Texture> texturesLoaded;
+
+protected:
+    static Engine engineInstance;
+
+private:
+    Engine() = default;
+    Engine(const Engine&) = default;
+    Engine& operator = (const Engine&) {};
+
 
 };

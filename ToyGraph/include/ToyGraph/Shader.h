@@ -5,24 +5,10 @@
 
 #pragma once
 
-// glad
-
-#include <glad/glad.h>
-
-// stl
-
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-
-// glm
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include <ToyGraph/Engine.h>
 
 enum class ShaderError {
+    UNINITIALIZED,
     SHADER_OK,
     V_SHADER_OPEN_FAILED,
     F_SHADER_OPEN_FAILED,
@@ -99,7 +85,7 @@ public:
     /**
      * 错误码。执行危险操作（如构造）后应检查此值。
      */
-    ShaderError errcode = ShaderError::SHADER_OK;
+    ShaderError errcode = ShaderError::UNINITIALIZED;
 
     /**
      * 错误信息。
@@ -123,5 +109,5 @@ protected:
     /**
      * shader 程序id。
      */
-    GLuint id = -1;
+    GLuint id = 0;
 };
