@@ -40,6 +40,9 @@
     <Filter Include="components\ToyGraph\AppRuntime">
       <UniqueIdentifier>{88d5c5f4-4c41-4e99-b57b-d2fb39aca0f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="components\ToyGraphCommon">
+      <UniqueIdentifier>{d389bc28-0836-4355-b068-d051cfca0c1a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\ToyGraph\Shader.h">
@@ -83,12 +86,18 @@
     <ClCompile Include="components\ToyGraph\AppRuntime\AppRuntime.cpp">
       <Filter>components\ToyGraph\AppRuntime</Filter>
     </ClCompile>
+    <ClCompile Include="components\ToyGraphCommon\CharEncodingConverter.cpp">
+      <Filter>components\ToyGraphCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="components\ToyGraphCommon\Random.cpp">
+      <Filter>components\ToyGraphCommon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\lib\glfw3.lib">
       <Filter>lib\lib</Filter>
     </Library>
-    <Library Include="lib\lib\assimp.lib">
+    <Library Include="lib\lib\assimp-vc143-mt.lib">
       <Filter>lib\lib</Filter>
     </Library>
   </ItemGroup>

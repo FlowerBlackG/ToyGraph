@@ -6,7 +6,7 @@
  */
 
 #pragma once
-
+#include "ToyGraphCommon/EngineCompileOptions.h"
 // glad & glfw
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>

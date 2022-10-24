@@ -3,7 +3,7 @@
  * 
  * 创建时间：2022年9月20日 于上海市嘉定区安亭镇
  */
-
+#include "ToyGraphCommon/EngineCompileOptions.h"
 #include "ToyGraph/Camera.h"
 
 using namespace std;
@@ -30,7 +30,7 @@ float Camera::getMovementSpeed() {
 
 /* ------------ 工具方法。 ------------ */
 
-glm::mat4& Camera::getViewMatrix() {
+glm::mat4 Camera::getViewMatrix() {
     glm::mat4 view = glm::lookAt(
         this->getPosition(), 
         this->getPosition() + this->getDirectionVectorFront(), 

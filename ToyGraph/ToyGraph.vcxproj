@@ -25,6 +25,8 @@
     <ClInclude Include="include\ToyGraph\Shader.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="components\ToyGraphCommon\CharEncodingConverter.cpp" />
+    <ClCompile Include="components\ToyGraphCommon\Random.cpp" />
     <ClCompile Include="components\ToyGraph\Actor\Actor.cpp" />
     <ClCompile Include="components\ToyGraph\AppRuntime\AppRuntime.cpp" />
     <ClCompile Include="components\ToyGraph\Camera\Camera.cpp" />
@@ -36,7 +38,7 @@
     <ClCompile Include="lib\src\glad.c" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="lib\lib\assimp.lib" />
+    <Library Include="lib\lib\assimp-vc143-mt.lib" />
     <Library Include="lib\lib\glfw3.lib" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

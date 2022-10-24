@@ -2,7 +2,7 @@
     Mesh.cpp
     创建于 2022年10月16日。
 */
-
+#include "ToyGraphCommon/EngineCompileOptions.h"
 #include "ToyGraph/Model/Mesh.h"
 
 using namespace std;
@@ -105,7 +105,7 @@ void Mesh::draw(Shader& shader) {
             }
         }
 
-        shader.setFloat("material." + name + number, idx);
+        shader.setInt("material." + name + number, idx);
         glBindTexture(GL_TEXTURE_2D, texture.id);
     }
 

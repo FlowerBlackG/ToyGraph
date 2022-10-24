@@ -2,7 +2,7 @@
     ToyGraph Runtime Impl
     created on 2022.10.17
 */
-
+#include "ToyGraphCommon/EngineCompileOptions.h"
 #include <ToyGraph/AppRuntime.h>
 
 #include <Windows.h>
@@ -25,6 +25,7 @@ AppRuntime& AppRuntime::getInstance(
     if (pInstance == nullptr) {
         pInstance = new AppRuntime(title, width, height);
     }
+
 
     return *pInstance;
 }
@@ -64,6 +65,10 @@ void AppRuntime::createWindow(
     }
 
     glEnable(GL_DEPTH_TEST);
+    
+    // blending.
+    //glEnable(GL_BLEND);
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 /* ------------ setters & getters. ------------ */
@@ -115,6 +120,7 @@ AppRuntime& AppRuntime::setTargetFrameTimeMs(int target) {
 /* ------------ tick control. ------------ */
 
 void AppRuntime::run() {
+    
     // 健康状态检查。
     if (errcode != AppRuntimeError::RUNTIME_OK || window == nullptr) {
         return;
@@ -126,6 +132,7 @@ void AppRuntime::run() {
 
     while (!glfwWindowShouldClose(window)) {
         // 时间控制。
+        
         float currentFrameTime = glfwGetTime();
         float deltaT = currentFrameTime - lastFrameTime;
         lastFrameTime = currentFrameTime;
@@ -139,7 +146,6 @@ void AppRuntime::run() {
 
         // 心跳。
         tick(deltaT);
-
     
         // 帧率控制。
         int deltaTMs = deltaT * 1000;

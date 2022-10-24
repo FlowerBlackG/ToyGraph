@@ -3,7 +3,7 @@
     created on 2022.10.10
     refactored on 2022.10.17
 */
-
+#include "ToyGraphCommon/EngineCompileOptions.h"
 // stb image
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>

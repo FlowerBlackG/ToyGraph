@@ -6,7 +6,7 @@
 
 #pragma once
 
-
+#include "ToyGraphCommon/EngineCompileOptions.h"
 
 // assimp library.
 #include <assimp/Importer.hpp>
@@ -15,6 +15,8 @@
 
 #include <ToyGraph/Engine.h>
 
+#include <ToyGraphCommon/CodePage.h>
+
 enum class ModelError {
     MODEL_OK,
     FAILED_TO_LOAD_MODEL,
@@ -22,12 +24,23 @@ enum class ModelError {
 };
 
 
-class Model {
+class Model : public Actor {
 
 public:
-    Model(const std::string& filepath, bool flipUVs = true);
+    Model() = default;
+    Model(
+        const std::string& filepath, 
+        bool flipUVs = true, 
+        CodePage binaryFileCp = CodePage::UTF8
+    );
 
     void draw(class Shader& shader);
+
+    void loadModel(
+        const std::string& filepath, 
+        bool flipUVs = true, 
+        CodePage binaryFileCp = CodePage::UTF8
+    );
 
 public:
     ModelError errcode = ModelError::MODEL_OK;
@@ -38,17 +51,18 @@ protected:
     std::vector<class Mesh> meshes;
     std::string directory;
 
-    void loadModel(const std::string& filepath, bool flipUVs = true);
-
-    void processNode(aiNode* node, const aiScene* scene);
     
-    void processAndAppendMesh(aiMesh* mesh, const aiScene* scene);
+
+    void processNode(aiNode* node, const aiScene* scene, CodePage binaryFileCp);
+    
+    void processAndAppendMesh(aiMesh* mesh, const aiScene* scene, CodePage binaryFileCp);
     
     void loadMaterialTextures(
         aiMaterial *material, 
         aiTextureType aitype, 
         enum class TextureType type, 
-        std::vector<Texture>& container
+        std::vector<Texture>& container,
+        CodePage binaryFileCp
     );
 
 };

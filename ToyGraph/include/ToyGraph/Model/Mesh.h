@@ -4,7 +4,7 @@
 */
 
 #pragma once
-
+#include "ToyGraphCommon/EngineCompileOptions.h"
 #include <ToyGraph/Shader.h>
 
 #include <ToyGraph/Engine.h>
@@ -27,13 +27,13 @@ public:
     
     std::vector<Vertex> vertices;
     std::vector<GLuint> indices;
-    std::vector<class Texture> textures;
+    std::vector<struct Texture> textures;
 
 
     Mesh(
         std::vector<Vertex>& vertices,
         std::vector<GLuint>& indices,
-        std::vector<class Texture>& textures
+        std::vector<struct Texture>& textures
     );
 
     /**
@@ -66,9 +66,9 @@ protected:
 
 protected:
 
-    GLuint vao;
-    GLuint vbo;
-    GLuint ebo;
+    GLuint vao = 0;
+    GLuint vbo = 0;
+    GLuint ebo = 0;
 
     bool initialized = false;
 

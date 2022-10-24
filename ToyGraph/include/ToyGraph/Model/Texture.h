@@ -6,7 +6,7 @@
 
 
 #pragma once
-
+#include "ToyGraphCommon/EngineCompileOptions.h"
 #include <ToyGraph/Engine.h>
 
 enum class TextureType {

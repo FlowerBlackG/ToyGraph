@@ -3,7 +3,12 @@
     创建于 2022年10月16日。
 */
 
+#include "ToyGraphCommon/EngineCompileOptions.h"
 #include <ToyGraph/Model/Model.h>
+
+#if TG_OS_IS_WINDOWS
+    #include <ToyGraphCommon/CharEncodingConverter.h>
+#endif
 
 using namespace std;
 
@@ -14,20 +19,27 @@ using namespace std;
 
 /* ------------ public. ------------ */
 
-Model::Model(const string& filepath, bool flipUVs) {
-    this->loadModel(filepath, flipUVs);
+Model::Model(
+    const string& filepath,     
+    bool flipUVs, 
+    CodePage binaryFileCp
+) {
+    this->loadModel(filepath, flipUVs, binaryFileCp);
 }
 
 void Model::draw(Shader& shader) {
+
     for (auto& mesh : this->meshes) {
         mesh.draw(shader);
     }
 }
 
+void Model::loadModel(
+    const string& filepath, 
+    bool flipUVs, 
+    CodePage binaryFileCp
+) {
 
-/* ------------ protected. ------------ */
-
-void Model::loadModel(const string& filepath, bool flipUVs) {
     Assimp::Importer importer;
 
     /*
@@ -65,23 +77,27 @@ void Model::loadModel(const string& filepath, bool flipUVs) {
 
     directory = filepath.substr(0, filepath.find_last_of('/'));
 
-    this->processNode(scene->mRootNode, scene);
+    this->processNode(scene->mRootNode, scene, binaryFileCp);
 }
 
-void Model::processNode(aiNode* node, const aiScene* scene) {
+
+/* ------------ protected. ------------ */
+
+
+void Model::processNode(aiNode* node, const aiScene* scene, CodePage binaryFileCp) {
 
     for (unsigned int idx = 0; idx < node->mNumMeshes; idx++) {
         aiMesh*& mesh = scene->mMeshes[node->mMeshes[idx]];
-        this->processAndAppendMesh(mesh, scene);
+        this->processAndAppendMesh(mesh, scene, binaryFileCp);
     }
 
     for (unsigned int idx = 0; idx < node->mNumChildren; idx++) {
-        this->processNode(node->mChildren[idx], scene);
+        this->processNode(node->mChildren[idx], scene, binaryFileCp);
     }
 
 }
 
-void Model::processAndAppendMesh(aiMesh* mesh, const aiScene* scene) {
+void Model::processAndAppendMesh(aiMesh* mesh, const aiScene* scene, CodePage binaryFileCp) {
 
     // 该方法实现性能优于教材《Learn OpenGL》的实现版本。
 
@@ -124,11 +140,13 @@ void Model::processAndAppendMesh(aiMesh* mesh, const aiScene* scene) {
         aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 
         this->loadMaterialTextures(
-            material, aiTextureType_DIFFUSE, TextureType::DIFFUSE, textures
+            material, aiTextureType_DIFFUSE, TextureType::DIFFUSE, 
+            textures, binaryFileCp
         );
 
         this->loadMaterialTextures(
-            material, aiTextureType_SPECULAR, TextureType::SPECULAR, textures
+            material, aiTextureType_SPECULAR, TextureType::SPECULAR, 
+            textures, binaryFileCp
         );
 
     }
@@ -140,7 +158,8 @@ void Model::loadMaterialTextures(
     aiMaterial *material, 
     aiTextureType aitype, 
     TextureType type, 
-    vector<Texture>& container
+    vector<Texture>& container,
+    CodePage binaryFileCp
 ) {
     
     auto& textures = container;
@@ -151,12 +170,19 @@ void Model::loadMaterialTextures(
     
         aiString str;
         material->GetTexture(aitype, idx, &str);
-        
-        
 
         string filepath = directory;
         filepath += '/';
-        filepath += str.C_Str();
+
+        string filename = str.C_Str();
+        
+#if TG_OS_IS_WINDOWS && TG_OS_ENCODING_IS_CHINESE_GB
+        if (binaryFileCp == CodePage::UTF8) {
+            filename = CharEncodingConverter::utf8ToGb(filename);
+        }
+#endif
+
+        filepath += filename;
 
         Texture* prevLoadedTexture = Engine::getInstance().getLoadedTexture(filepath);
 

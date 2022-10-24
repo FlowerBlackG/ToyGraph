@@ -1,4 +1,6 @@
 
+
+#include "ToyGraphCommon/EngineCompileOptions.h"
 #include "ToyGraph/Shader.h"
 #include <fstream>
 #include <sstream>

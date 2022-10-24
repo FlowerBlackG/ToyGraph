@@ -5,8 +5,9 @@
  */
 
 #pragma once
-
+#include "ToyGraphCommon/EngineCompileOptions.h"
 #include <ToyGraph/Actor.h>
+
 
 /**
  * 相机。
@@ -29,7 +30,7 @@ public: // 工具方法。
      * 
      * @return 计算得到的视角矩阵。
      */
-    glm::mat4& getViewMatrix();
+    glm::mat4 getViewMatrix();
 
 protected: // 基本数据成员。
 

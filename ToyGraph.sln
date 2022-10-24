@@ -20,6 +20,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MeshLoadingDemo", "MeshLoad
 		{95ED778F-D534-4A79-B8F3-05DFDA2CE2D1} = {95ED778F-D534-4A79-B8F3-05DFDA2CE2D1}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OrbitDemo", "OrbitDemo\OrbitDemo.vcxproj", "{3EFA0906-C966-4ED7-9BAA-55DAD17EA38C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{95ED778F-D534-4A79-B8F3-05DFDA2CE2D1} = {95ED778F-D534-4A79-B8F3-05DFDA2CE2D1}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -60,6 +65,14 @@ Global
 		{31986726-D19D-4696-8BA3-52273458628D}.Release|x64.Build.0 = Release|x64
 		{31986726-D19D-4696-8BA3-52273458628D}.Release|x86.ActiveCfg = Release|Win32
 		{31986726-D19D-4696-8BA3-52273458628D}.Release|x86.Build.0 = Release|Win32
+		{3EFA0906-C966-4ED7-9BAA-55DAD17EA38C}.Debug|x64.ActiveCfg = Debug|x64
+		{3EFA0906-C966-4ED7-9BAA-55DAD17EA38C}.Debug|x64.Build.0 = Debug|x64
+		{3EFA0906-C966-4ED7-9BAA-55DAD17EA38C}.Debug|x86.ActiveCfg = Debug|Win32
+		{3EFA0906-C966-4ED7-9BAA-55DAD17EA38C}.Debug|x86.Build.0 = Debug|Win32
+		{3EFA0906-C966-4ED7-9BAA-55DAD17EA38C}.Release|x64.ActiveCfg = Release|x64
+		{3EFA0906-C966-4ED7-9BAA-55DAD17EA38C}.Release|x64.Build.0 = Release|x64
+		{3EFA0906-C966-4ED7-9BAA-55DAD17EA38C}.Release|x86.ActiveCfg = Release|Win32
+		{3EFA0906-C966-4ED7-9BAA-55DAD17EA38C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

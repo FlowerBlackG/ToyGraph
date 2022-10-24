@@ -5,6 +5,7 @@
  */
 
 #pragma once
+#include "ToyGraphCommon/EngineCompileOptions.h"
 
 // glad & glfw
 #include <glad/glad.h>
@@ -41,7 +42,7 @@ public: // 构造和析构。
      */
     virtual ~Actor() {}
 
-public: // 钩子成员。
+public: // 心跳。
 
     /**
      * 每帧被调用。用于处理 Actor 的变化。
@@ -49,6 +50,8 @@ public: // 钩子成员。
      * @param deltaSeconds 帧间隔时间。单位为秒。
      */
     std::function<void (float deltaSeconds)> tick = [] (...) {};
+    
+    std::function<void ()> render = [] () {};
 
 public: // setters and getters.
 
@@ -78,13 +81,17 @@ public: // setters and getters.
    
     virtual const glm::vec3& getDirectionVectorFront();
 
+    virtual Actor& setScale(const glm::vec3& scale);
+    virtual const glm::vec3& getScale();
+
 public: // 一般方法。
     virtual void move(float distance, const glm::vec3& direction);
+    glm::mat4 getModelMatrix();
 
 protected: // 自动工具成员。外部一般不直接操作。
-    glm::vec3 directionVectorUp;
-    glm::vec3 directionVectorRight;
-    glm::vec3 directionVectorFront;
+    glm::vec3 directionVectorUp = glm::vec3(0.0f, 1.0f, 0.0f);
+    glm::vec3 directionVectorRight = glm::vec3(0.0f, 0.0f, 1.0f);
+    glm::vec3 directionVectorFront = glm::vec3(1.0f, 0.0f, 0.0f);
 
     bool directionVectorsIsLatest = false;
 
@@ -122,6 +129,11 @@ protected: // 内部成员。
      * 翻滚角。
      */
     float roll = 0.0f;
+
+    /**
+     * 缩放。
+     */
+    glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f);
 
 private: // 禁止内容。
 

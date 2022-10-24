@@ -3,16 +3,21 @@
  * 
  * 创建时间：2022年9月20日 于上海市嘉定区安亭镇
  */
-
+#include "ToyGraphCommon/EngineCompileOptions.h"
 #include <cmath>
 
 #include "ToyGraph/Actor.h"
 
-#include <cstdio>
+using namespace std;
 
 Actor::Actor() {
     this->updateDirectionVectors();
+
 }
+
+/* -------- 心跳。 -------- */
+
+
 
 /* -------- setters and getters. -------- */
 
@@ -74,7 +79,30 @@ const glm::vec3& Actor::getDirectionVectorFront() {
     return this->directionVectorFront;
 }
 
+Actor& Actor::setScale(const glm::vec3& scale) {
+    this->scale = scale;
+    return *this;
+}
+
+const glm::vec3& Actor::getScale() {
+    return this->scale;
+}
+
 /* -------- 一般方法。 -------- */
+
+glm::mat4 Actor::getModelMatrix() {
+    auto model = glm::mat4(1.0f);
+
+    model = glm::translate(model, this->position);
+
+    // 将欧拉角度转换成四元数，然后再转换成旋转矩阵。
+    auto qua = glm::qua(glm::radians(glm::vec3(roll, yaw, pitch)));
+    model *= glm::mat4_cast(qua);
+
+    model = glm::scale(model, this->scale);
+
+    return model;
+}
 
 void Actor::move(float distance, const glm::vec3& direction) {
     auto movement = glm::normalize(direction);
