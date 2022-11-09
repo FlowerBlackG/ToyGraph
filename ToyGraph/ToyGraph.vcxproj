@@ -34,7 +34,10 @@
     <ClCompile Include="components\ToyGraph\Model\Mesh.cpp" />
     <ClCompile Include="components\ToyGraph\Model\Model.cpp" />
     <ClCompile Include="components\ToyGraph\Model\Texture.cpp" />
+    <ClCompile Include="components\ToyGraph\Scene\Scene.cpp" />
+    <ClCompile Include="components\ToyGraph\Scene\SceneManager.cpp" />
     <ClCompile Include="components\ToyGraph\Shader\Shader.cpp" />
+    <ClCompile Include="components\ToyGraph\Skybox\Skybox.cpp" />
     <ClCompile Include="lib\src\glad.c" />
   </ItemGroup>
   <ItemGroup>

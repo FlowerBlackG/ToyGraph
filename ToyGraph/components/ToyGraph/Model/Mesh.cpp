@@ -109,12 +109,12 @@ void Mesh::draw(Shader& shader) {
         glBindTexture(GL_TEXTURE_2D, texture.id);
     }
 
-    glActiveTexture(GL_TEXTURE0); // todo: 这行是干什么的？
-
     // draw mesh.
     glBindVertexArray(vao);
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
+
+    glActiveTexture(GL_TEXTURE0);
 
 }
 

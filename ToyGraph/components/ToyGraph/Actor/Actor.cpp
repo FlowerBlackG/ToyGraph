@@ -7,6 +7,9 @@
 #include <cmath>
 
 #include "ToyGraph/Actor.h"
+#include "ToyGraph/Model/Model.h"
+#include <ToyGraph/Shader.h>
+#include <iostream>
 
 using namespace std;
 
@@ -15,9 +18,29 @@ Actor::Actor() {
 
 }
 
+Actor::~Actor()  {
+    for (auto it : children) {
+        delete it;
+    }
+}
+
 /* -------- 心跳。 -------- */
 
+void Actor::render(Shader* pShader) {
 
+    if (pShader == nullptr && shader.errcode == ShaderError::SHADER_OK) {
+        pShader = &shader;
+    }
+
+    for (auto it : children) {
+        it->render(pShader);
+    }
+
+    if (pShader != nullptr && this->pModel) {
+        pModel->draw(*pShader);
+    }
+
+}
 
 /* -------- setters and getters. -------- */
 
@@ -86,6 +109,20 @@ Actor& Actor::setScale(const glm::vec3& scale) {
 
 const glm::vec3& Actor::getScale() {
     return this->scale;
+}
+
+void Actor::addChild(Actor* actor) {
+    this->children.push_back(actor);
+    actor->parent = this;
+}
+
+void Actor::bindModel(Model* model) {
+    this->pModel = model;
+}
+
+void Actor::setShader(int shaderId) {
+    this->shader.setId(shaderId);
+    this->shader.errcode = ShaderError::SHADER_OK;
 }
 
 /* -------- 一般方法。 -------- */

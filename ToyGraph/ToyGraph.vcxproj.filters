@@ -43,6 +43,12 @@
     <Filter Include="components\ToyGraphCommon">
       <UniqueIdentifier>{d389bc28-0836-4355-b068-d051cfca0c1a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="components\ToyGraph\Scene">
+      <UniqueIdentifier>{16734950-0938-44ce-a7b9-91944a8bff1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="components\ToyGraph\Skybox">
+      <UniqueIdentifier>{65e8b695-9581-4b29-93b6-9dcd8faa0b3f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\ToyGraph\Shader.h">
@@ -91,6 +97,15 @@
     </ClCompile>
     <ClCompile Include="components\ToyGraphCommon\Random.cpp">
       <Filter>components\ToyGraphCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="components\ToyGraph\Skybox\Skybox.cpp">
+      <Filter>components\ToyGraph\Skybox</Filter>
+    </ClCompile>
+    <ClCompile Include="components\ToyGraph\Scene\Scene.cpp">
+      <Filter>components\ToyGraph\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="components\ToyGraph\Scene\SceneManager.cpp">
+      <Filter>components\ToyGraph\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

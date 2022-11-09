@@ -29,6 +29,8 @@ Model::Model(
 
 void Model::draw(Shader& shader) {
 
+    shader.use();
+
     for (auto& mesh : this->meshes) {
         mesh.draw(shader);
     }

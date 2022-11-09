@@ -4,8 +4,11 @@
 */
 #include "ToyGraphCommon/EngineCompileOptions.h"
 #include <ToyGraph/AppRuntime.h>
+#include <ToyGraph/Scene/SceneManager.h>
+#include <ToyGraph/Scene/Scene.h>
 
 #include <Windows.h>
+#include <iostream>
 
 using namespace std;
 
@@ -120,6 +123,11 @@ AppRuntime& AppRuntime::setTargetFrameTimeMs(int target) {
 /* ------------ tick control. ------------ */
 
 void AppRuntime::run() {
+
+    auto& sceneMgr = SceneManager::getInstance();
+    if (sceneMgr.currentScene() == nullptr) {
+        return;
+    }
     
     // 健康状态检查。
     if (errcode != AppRuntimeError::RUNTIME_OK || window == nullptr) {
@@ -131,6 +139,7 @@ void AppRuntime::run() {
     lastFrameTime = glfwGetTime();
 
     while (!glfwWindowShouldClose(window)) {
+        
         // 时间控制。
         
         float currentFrameTime = glfwGetTime();
@@ -138,14 +147,19 @@ void AppRuntime::run() {
         lastFrameTime = currentFrameTime;
 
         // 处理输入。
-        activeKeyInputProcessor(window, deltaT);
+        sceneMgr.currentScene()->activeKeyInputProcessor(window, deltaT);
+
+        for (int idx = 0; idx < GLFW_KEY_LAST; idx++) {
+            this->lastFrameKeyStatus[idx] = glfwGetKey(window, idx);
+        }
 
         // 清空上一帧内容。
         glClearColor(0, 0, 0, 1);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // 心跳。
-        tick(deltaT);
+        sceneMgr.currentScene()->tick(deltaT);
+        sceneMgr.currentScene()->render();
     
         // 帧率控制。
         int deltaTMs = deltaT * 1000;
@@ -167,13 +181,20 @@ void AppRuntime::run() {
 void AppRuntime::frameBufferSizeCallbackBridge(
     GLFWwindow* window, int width, int height
 ) {
+
     AppRuntime::getInstance().frameBufferSizeCallback(width, height);
+    
 }
 
 void AppRuntime::cursorPosCallbackBridge(
     GLFWwindow* window, double xPos, double yPos
 ) {
-    AppRuntime::getInstance().cursorPosCallback(xPos, yPos);
+
+    Scene* scene = SceneManager::getInstance().currentScene();
+    if (scene != nullptr) {
+        scene->cursorPosCallback(xPos, yPos);
+    }
+
 }
 
 
