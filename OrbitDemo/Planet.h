@@ -14,6 +14,18 @@ public:
     /** 更新方位。 */
     void updateTransform(float deltaT);
 
+    virtual void tick(float deltaT) override {
+        this->updateTransform(deltaT);
+        Actor::tick(deltaT); // tick children
+    }
+
+    virtual void render(class Shader* pShader = nullptr) {
+        pShader = &shader;
+        shader.setMatrix4fv("model", this->getModelMatrix());
+
+        this->pModel->draw(shader);
+    }
+
 public: 
     /** 轨道半径。 */
     float orbitRadius = 0.0f;

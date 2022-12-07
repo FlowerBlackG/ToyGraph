@@ -6,11 +6,15 @@
 
 void Planet::updateTransform(float deltaT) {
 
+    if (this->parent) {
+        this->rotationCenter = this->parent->getPosition();
+    }
+
     // 自转。
     float yaw = this->getYaw();
-    this->setYaw(yaw + deltaT * this->selfRotationSpeed);
+    //this->setYaw(yaw + deltaT * this->selfRotationSpeed);
 
-    this->revolutionRotation += this->revolutionSpeed * deltaT;
+    //this->revolutionRotation += this->revolutionSpeed * deltaT;
 
     // 公转。
     auto pos = glm::vec3(0.0f, 0.0f, 0.0f);

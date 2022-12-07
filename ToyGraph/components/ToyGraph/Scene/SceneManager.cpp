@@ -16,6 +16,10 @@
 
 using namespace std;
 
+SceneManager::SceneManager() {
+
+}
+
 SceneManager& SceneManager::getInstance() {
     static SceneManager instance;
     return instance;

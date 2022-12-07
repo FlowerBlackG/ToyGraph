@@ -12,6 +12,20 @@
 
 using namespace std;
 
+static void __tgPrintToyGraphLogo() {
+    const char* logo = 
+        "  _______           _____                 _     \n"
+        " |__   __|         / ____|               | |    \n"
+        "    | | ___  _   _| |  __ _ __ __ _ _ __ | |__  \n"
+        "    | |/ _ \\| | | | | |_ | '__/ _` | '_ \\| '_ \\ \n"
+        "    | | (_) | |_| | |__| | | | (_| | |_) | | | |\n"
+        "    |_|\\___/ \\__, |\\_____|_|  \\__,_| .__/|_| |_|\n"
+        "              __/ |                | |          \n"
+        "             |___/                 |_|          ";
+
+    cout << logo << "\n\n";
+}
+
 AppRuntime& AppRuntime::getInstance() {
     if (pInstance == nullptr) {
         pInstance = new AppRuntime;
@@ -205,6 +219,7 @@ AppRuntime* AppRuntime::pInstance = nullptr;
 
 
 AppRuntime::AppRuntime() {
+    __tgPrintToyGraphLogo();
     this->prepareGlfw();
 }
 
@@ -213,6 +228,9 @@ AppRuntime::AppRuntime(
     int windowWidth,
     int windowHeight
 ) {
+
+    __tgPrintToyGraphLogo();
+
     this->prepareGlfw();
     this->createWindow(windowTitle, windowWidth, windowHeight);
 }

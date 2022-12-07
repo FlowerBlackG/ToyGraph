@@ -11,9 +11,14 @@
 
 #include <ToyGraph/Actor.h>
 
+#include <iostream>
+
 using namespace std;
 
 Scene::~Scene() {
+
+    cout << "Scene::~Scene obj: " << this << endl;
+
     for (auto it : actors) {
         delete it.second;
     }

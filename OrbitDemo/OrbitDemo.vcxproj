@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Planet.cpp" />
+    <ClCompile Include="PlanetScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\x64\Release\ToyGraph.lib" />
